@@ -76,4 +76,6 @@ class Comments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Snippets::className(), ['id' => 'id_snippet']);
     }
+    
+    
 }

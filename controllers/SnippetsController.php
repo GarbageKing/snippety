@@ -8,6 +8,9 @@ use app\models\SnippetsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Languages;
+
+use app\models\Comments;
 
 /**
  * SnippetsController implements the CRUD actions for Snippets model.
@@ -51,8 +54,14 @@ class SnippetsController extends Controller
      */
     public function actionView($id)
     {
+        $model2 = new Comments();
+        
+        $comments = Comments::find()->where(['id_snippet' => $id])->all();
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'model2' => $model2,
+            'comments' => $comments
         ]);
     }
 
@@ -63,13 +72,15 @@ class SnippetsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Snippets();
+        $model = new Snippets();        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+                  
             return $this->render('create', [
                 'model' => $model,
+                'languages' => Languages::find()->all()                
             ]);
         }
     }

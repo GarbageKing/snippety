@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "users".
@@ -18,7 +20,7 @@ use Yii;
  * @property Snippetlikes[] $snippetlikes
  * @property Snippets[] $snippets
  */
-class Users extends \yii\db\ActiveRecord
+class Users extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -34,9 +36,9 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'upassword', 'email', 'auth_key'], 'required'],
+            [['username', 'upassword', 'email'/*, 'auth_key'*/], 'required'],
             [['username', 'email'], 'string', 'max' => 100],
-            [['upassword', 'auth_key'], 'string', 'max' => 64],
+            [['upassword'/*, 'auth_key'*/], 'string', 'max' => 64],
         ];
     }
 
@@ -85,4 +87,69 @@ class Users extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Snippets::className(), ['id_user' => 'id']);
     }
+    
+    
+    
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+    
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+    
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
+    }
+    
+    public static function findByUsername($username)
+    {
+        return static::findOne(['username' => $username]);
+    }
+    
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->upassword);        
+    }
+    
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert))
+        {
+            if($this->isNewRecord)
+            {
+            $exists = Users::find()->where( [ 'username' => $this->username ] )->exists();
+            $exists2 = Users::find()->where( [ 'email' => $this->email ] )->exists();
+            if($exists){                
+                echo '<script>alert("User with this username already exists");</script>';
+                return;
+            }
+            if($exists2){
+                echo '<script>alert("User with this email already exists");</script>';
+                return;
+            }          
+            
+            }
+            
+            $this->upassword = Yii::$app->security->generatePasswordHash($this->upassword);
+            $this->auth_key = Yii::$app->security->generateRandomString();
+            
+            return parent::beforeSave($insert);            
+            
+        }
+    }
+    
 }

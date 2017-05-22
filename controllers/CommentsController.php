@@ -64,14 +64,19 @@ class CommentsController extends Controller
     public function actionCreate()
     {
         $model = new Comments();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())){
+            $model->id_user = Yii::$app->user->getId();
+            $model->id_snippet = explode('id=', Yii::$app->request->referrer)[1];
+            //print_r($model);die;
+            $model->save();
+        }
+        /*if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
-        }
+        }*/
     }
 
     /**

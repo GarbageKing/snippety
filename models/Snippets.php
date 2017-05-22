@@ -96,4 +96,26 @@ class Snippets extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Users::className(), ['id' => 'id_user']);
     }
+    
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert))
+        {
+            if($this->isNewRecord)
+            {
+            
+                $this->id_user = Yii::$app->user->getId();
+                
+                if($this->is_public == '')
+                    $this->is_public = 1;
+            
+            }     
+           
+            
+            return parent::beforeSave($insert);            
+            
+        }
+    }
+    
+    
 }
