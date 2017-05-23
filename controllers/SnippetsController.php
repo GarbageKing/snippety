@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 use app\models\Languages;
 
 use app\models\Comments;
+use app\models\Snippetlikes;
+use app\models\Commentlikes;
 
 /**
  * SnippetsController implements the CRUD actions for Snippets model.
@@ -56,12 +58,46 @@ class SnippetsController extends Controller
     {
         $model2 = new Comments();
         
-        $comments = Comments::find()->where(['id_snippet' => $id])->all();
+        //$comments = Comments::find()->leftJoin('commentlikes', 'commentlikes.id_comment = comments.id')->where(['id_snippet' => $id])->all(); 
+        //$comments = Comments::find()->where(['id_snippet' => $id])->all();
+                
+        /*$likedislike = [];
+        foreach($comments as $comment)
+        {
+            $commentlikes = Commentlikes::find()->where(['id_comment' => $comment['id'], 'is_like' => 1])->all();
+            $countlikes = count($commentlikes);
+            $likedislike['likes'][] = $countlikes;
+            
+            $commentdislikes = Commentlikes::find()->where(['id_comment' => $comment['id'], 'is_like' => 0])->all();
+            $countdislikes = count($commentdislikes);
+            $likedislike['dislikes'][] = $countdislikes;
+        }*/
+        
+        $query = (new \yii\db\Query())
+       ->select(['comments.*', 'COUNT(case is_like when 1 then 1 else null end) AS countlike, '
+           . 'COUNT(case is_like when 0 then 1 else null end) AS countdislike from comments'])
+       ->join('LEFT JOIN', Commentlikes::tableName(), 'commentlikes.id_comment = comments.id')
+       ->where('comments.id_snippet='.$id)
+       ->groupBy('comments.id');       
+        $comments = $query->all();
+        
+        //print_r($comments);die;        
+                
+        $model3 = new Snippetlikes();
+        
+        $snippetlikes = Snippetlikes::find()->where(['id_snippet' => $id, 'is_like' => 1])->all();
+        $snippetlikes = count($snippetlikes);
+        
+        $snippetdislikes = Snippetlikes::find()->where(['id_snippet' => $id, 'is_like' => 0])->all();
+        $snippetdislikes = count($snippetdislikes);
         
         return $this->render('view', [
             'model' => $this->findModel($id),
             'model2' => $model2,
-            'comments' => $comments
+            'comments' => $comments,
+            'model3' => $model3,
+            'snippetlikes' => $snippetlikes,
+            'snippetdislikes' => $snippetdislikes,            
         ]);
     }
 
@@ -116,6 +152,49 @@ class SnippetsController extends Controller
 
         return $this->redirect(['index']);
     }
+    
+    
+    public function actionLike($id, $is_like)
+    {
+        //$model = new Snippetlikes();
+        $exists = Snippetlikes::find()->where(['id_snippet' => $id, 'id_user' => Yii::$app->user->getId()])->all();
+        
+        if($exists)
+        {
+            $uid = Yii::$app->user->getId();
+            Yii::$app->db->createCommand()->update('snippetlikes', ['id_snippet' => $id,
+                'id_user' => $uid, 'is_like' => $is_like], "id_snippet=$id and id_user=$uid")->execute();            
+        }
+        else
+        {
+            Yii::$app->db->createCommand()->insert('snippetlikes', ['id_snippet' => $id,
+                'id_user' => Yii::$app->user->getId(), 'is_like' => $is_like])->execute();
+        }
+        
+        return $this->redirect(['view', 'id' => $id]); 
+        
+    }
+    
+    public function actionCommentlike($id, $is_like)
+    {
+        //$model = new Snippetlikes();
+        $exists = Commentlikes::find()->where(['id_comment' => $id, 'id_user' => Yii::$app->user->getId()])->all();
+        
+        if($exists)
+        {
+            $uid = Yii::$app->user->getId();
+            Yii::$app->db->createCommand()->update('commentlikes', ['id_comment' => $id,
+                'id_user' => $uid, 'is_like' => $is_like], "id_comment=$id and id_user=$uid")->execute();
+        }
+        else
+        {
+            Yii::$app->db->createCommand()->insert('commentlikes', ['id_comment' => $id,
+                'id_user' => Yii::$app->user->getId(), 'is_like' => $is_like])->execute();
+        }
+        
+        return $this->redirect(Yii::$app->request->referrer); 
+        
+    }    
 
     /**
      * Finds the Snippets model based on its primary key value.

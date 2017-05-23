@@ -39,11 +39,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'is_public',
         ],
     ]) ?>
+    <div id="likes">
+                
+        <p>Like<?= Html::a('Like', ['like', 'id' => $model->id, 'is_like' => 1], ['class' => 'btn btn-primary']) ?> {<?php echo $snippetlikes; ?>} Dislike <?= Html::a('Dislike', ['like', 'id' => $model->id, 'is_like' => 0], ['class' => 'btn btn-danger']) ?> {<?php echo $snippetdislikes; ?>}</p>
+
+    </div>
     
     <div id="comments">
         <?php foreach ($comments as $comment){ ?>
         
-            <p> <?php echo $comment->text; ?></p>
+            <div><?php echo $comment['c_text']; ?>
+            <p>Like<?= Html::a('Like', ['commentlike', 'id' => $comment['id'], 'is_like' => 1], ['class' => 'btn btn-primary']) ?> 
+                {<?php echo  $comment['countlike'];?>} Dislike <?= Html::a('Dislike', ['commentlike', 'id' => $comment['id'], 'is_like' => 0], ['class' => 'btn btn-danger']) ?> 
+                {<?php echo  $comment['countdislike'];?>}</p>
+            </div>
         
         <?php } ?>
     </div>

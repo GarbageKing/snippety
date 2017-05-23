@@ -69,6 +69,7 @@ class CommentsController extends Controller
             $model->id_snippet = explode('id=', Yii::$app->request->referrer)[1];
             //print_r($model);die;
             $model->save();
+            return $this->redirect(Yii::$app->request->referrer);
         }
         /*if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->request->referrer);
