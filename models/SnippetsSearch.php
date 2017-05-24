@@ -18,8 +18,8 @@ class SnippetsSearch extends Snippets
     public function rules()
     {
         return [
-            [['id', 'id_language', 'id_user', 'is_public'], 'integer'],
-            [['s_title', 's_description', 's_code', 's_date'], 'safe'],
+            [['id', /*'id_language',*/ 'id_user', 'is_public'], 'integer'],
+            [['s_title', 's_description', 's_code', 's_date', 'id_language'], 'safe'],
         ];
     }
 
@@ -42,6 +42,11 @@ class SnippetsSearch extends Snippets
     public function search($params)
     {
         $query = Snippets::find();
+        
+        $query->joinWith(['idLanguage']);
+                //->join('JOIN',
+                //'languages as l',
+		//'l.id = snippets.id_language');
 
         // add conditions that should always apply here
 
@@ -60,7 +65,7 @@ class SnippetsSearch extends Snippets
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'id_language' => $this->id_language,
+            //'id_language' => $this->id_language,
             'id_user' => $this->id_user,
             's_date' => $this->s_date,
             'is_public' => $this->is_public,
@@ -68,7 +73,8 @@ class SnippetsSearch extends Snippets
 
         $query->andFilterWhere(['like', 's_title', $this->s_title])
             ->andFilterWhere(['like', 's_description', $this->s_description])
-            ->andFilterWhere(['like', 's_code', $this->s_code]);
+            ->andFilterWhere(['like', 's_code', $this->s_code])
+            ->andFilterWhere(['like', /*'languages.name'*/'id_language', $this->id_language]);
 
         return $dataProvider;
     }

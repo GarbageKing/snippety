@@ -113,3 +113,16 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/*.snippets-index tbody:before {
+    content: "-";
+    display: block;
+    line-height: 3em;
+    color: transparent;
+    border: none !important;
+}*/
+
+#snip-content> section, code, time
+{
+    display: block;
+}

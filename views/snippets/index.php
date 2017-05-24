@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use app\models\Languages;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SnippetsSearch */
@@ -13,27 +15,34 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="snippets-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Snippets', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
+    <div class="col-md-10">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'id_language',
-            'id_user',
+            //['class' => 'yii\grid\SerialColumn'],
+                             
+            [
+                      'label' => 'Language',
+                      'attribute' => 'id_language',                        
+                      'value' => 'idLanguage.name',
+                      //'filter'=>ArrayHelper::map(Languages::find()->asArray()->all(), 'id', 'name'),
+            ],
+            
             's_title',
-            's_description',
-            // 's_code',
-            // 's_date',
-            // 'is_public',
+            's_description',            
+            's_date',
+            
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
         ],
     ]); ?>
+    </div>
+    <div class="col-md-2 ">
+    <?= $this->render('_search', ['model' => $searchModel]) ?>
+    <p style="margin-top:50px;">
+        <?= Html::a('Create Snippets', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+    </div>
 </div>

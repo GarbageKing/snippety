@@ -136,6 +136,7 @@ class SnippetsController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'languages' => Languages::find()->all()
             ]);
         }
     }

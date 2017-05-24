@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Snippets */
 
-$this->title = $model->id;
+$this->title = $model->s_title;
 $this->params['breadcrumbs'][] = ['label' => 'Snippets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,42 +15,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'id_language',
-            'id_user',
-            's_title',
-            's_description',
-            's_code',
-            's_date',
-            'is_public',
-        ],
-    ]) ?>
+    <div id="snip-content">
+        <section><?php echo $model->s_description; ?></section>
+        <code><?php echo $model->s_code; ?></code>
+        <time><?php echo $model->s_date; ?></time>
+    </div>
+    
+    
     <div id="likes">
                 
-        <p>Like<?= Html::a('Like', ['like', 'id' => $model->id, 'is_like' => 1], ['class' => 'btn btn-primary']) ?> {<?php echo $snippetlikes; ?>} Dislike <?= Html::a('Dislike', ['like', 'id' => $model->id, 'is_like' => 0], ['class' => 'btn btn-danger']) ?> {<?php echo $snippetdislikes; ?>}</p>
+        <p>Like <?= Html::a('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 1], ['class' => 'btn btn-primary']) ?> {<?php echo $snippetlikes; ?>} 
+           Dislike <?= Html::a('<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 0], ['class' => 'btn btn-danger']) ?> {<?php echo $snippetdislikes; ?>}</p>
 
     </div>
     
     <div id="comments">
+        <h3>Comments</h3>
+        
         <?php foreach ($comments as $comment){ ?>
         
             <div><?php echo $comment['c_text']; ?>
-            <p>Like<?= Html::a('Like', ['commentlike', 'id' => $comment['id'], 'is_like' => 1], ['class' => 'btn btn-primary']) ?> 
-                {<?php echo  $comment['countlike'];?>} Dislike <?= Html::a('Dislike', ['commentlike', 'id' => $comment['id'], 'is_like' => 0], ['class' => 'btn btn-danger']) ?> 
+            <p>Like <?= Html::a('+', ['commentlike', 'id' => $comment['id'], 'is_like' => 1], ['class' => 'btn btn-primary']) ?> 
+                {<?php echo  $comment['countlike'];?>} Dislike <?= Html::a('-', ['commentlike', 'id' => $comment['id'], 'is_like' => 0], ['class' => 'btn btn-danger']) ?> 
                 {<?php echo  $comment['countdislike'];?>}</p>
             </div>
         

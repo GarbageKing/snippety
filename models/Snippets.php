@@ -57,10 +57,10 @@ class Snippets extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_language' => 'Id Language',
             'id_user' => 'Id User',
-            's_title' => 'S Title',
-            's_description' => 'S Description',
+            's_title' => 'Title',
+            's_description' => 'Description',
             's_code' => 'S Code',
-            's_date' => 'S Date',
+            's_date' => 'Date',
             'is_public' => 'Is Public',
         ];
     }

@@ -21,9 +21,9 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 's_title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 's_description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 's_description')->textArea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 's_code')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 's_code')->textArea(['maxlength' => true]) ?>
 
    
 

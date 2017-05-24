@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Languages;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SnippetsSearch */
@@ -15,15 +17,12 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <h3>Languages</h3>
+    <label><input type="radio" name="SnippetsSearch[id_language]" value="" checked="checked">All</label>
+    <?= $form->field($model, 'id_language')->radioList(ArrayHelper::map(Languages::find()->asArray()->all(), 'id', 'name') )->label(false) ?>
 
-    <?= $form->field($model, 'id_language') ?>
-
-    <?= $form->field($model, 'id_user') ?>
-
-    <?= $form->field($model, 's_title') ?>
-
-    <?= $form->field($model, 's_description') ?>
+    <h3>Title</h3>
+    <?= $form->field($model, 's_title')->label(false) ?>    
 
     <?php // echo $form->field($model, 's_code') ?>
 
@@ -32,8 +31,7 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'is_public') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', ['class' => 'btn btn-default btn-block']) ?>       
     </div>
 
     <?php ActiveForm::end(); ?>
