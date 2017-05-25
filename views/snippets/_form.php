@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'id_language')->dropDownList(
         ArrayHelper::map($languages, 'id', 'name')
-    ) ?>
+    )->label('Language') ?>
 
     
 
@@ -23,9 +23,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 's_description')->textArea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 's_code')->textArea(['maxlength' => true]) ?>
-
-   
+    <?= $form->field($model, 's_code')->textArea(['maxlength' => true, 'class' => 'codearea'])->label('Code') ?>   
 
     <?= $form->field($model, 'is_public')->radioList([ 1=>'Public', 0=>'Private']) ?>
 

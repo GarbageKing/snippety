@@ -13,6 +13,7 @@ use app\models\Languages;
 use app\models\Comments;
 use app\models\Snippetlikes;
 use app\models\Commentlikes;
+use app\models\Users;
 
 /**
  * SnippetsController implements the CRUD actions for Snippets model.
@@ -75,8 +76,9 @@ class SnippetsController extends Controller
         
         $query = (new \yii\db\Query())
        ->select(['comments.*', 'COUNT(case is_like when 1 then 1 else null end) AS countlike, '
-           . 'COUNT(case is_like when 0 then 1 else null end) AS countdislike from comments'])
+           . 'COUNT(case is_like when 0 then 1 else null end) AS countdislike, users.username from comments'])
        ->join('LEFT JOIN', Commentlikes::tableName(), 'commentlikes.id_comment = comments.id')
+       ->join('LEFT JOIN', Users::tableName(), 'users.id = comments.id_user')
        ->where('comments.id_snippet='.$id)
        ->groupBy('comments.id');       
         $comments = $query->all();
@@ -91,13 +93,16 @@ class SnippetsController extends Controller
         $snippetdislikes = Snippetlikes::find()->where(['id_snippet' => $id, 'is_like' => 0])->all();
         $snippetdislikes = count($snippetdislikes);
         
+        $usersnippet = Users::find()->where(['id' => $this->findModel($id)->id_user])->one()['username'];
+                
         return $this->render('view', [
             'model' => $this->findModel($id),
             'model2' => $model2,
             'comments' => $comments,
             'model3' => $model3,
             'snippetlikes' => $snippetlikes,
-            'snippetdislikes' => $snippetdislikes,            
+            'snippetdislikes' => $snippetdislikes,              
+            'user' => $usersnippet,
         ]);
     }
 

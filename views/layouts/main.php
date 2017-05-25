@@ -73,6 +73,16 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+    
+    <link rel="stylesheet" href="assets/highlight.js/styles/ocean.css">
+<script src="assets/highlight.js/highlight.pack.js"></script>
+<script>//hljs.initHighlightingOnLoad();
+$(document).ready(function() {
+  $('code, .codearea').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

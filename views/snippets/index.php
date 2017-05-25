@@ -33,7 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
             's_title',
             's_description',            
             's_date',
-            
+            [
+                      'label' => 'User',
+                      'attribute' => 'id_user',                        
+                      'value' => 'idUser.username',                      
+            ],          
 
             ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
         ],

@@ -6,22 +6,16 @@ $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+        <h2>Go to the Snippets by clicking one of the tabs below!</h2>
 
     <div class="body-content">
 
         <div class="row">
             <?php foreach ($languages as $lang){?>
             <div class="col-lg-4">
+                <a href=<?php echo "?r=snippets%2Findex&SnippetsSearch%5Bid_language%5D=&SnippetsSearch%5Bid_language%5D=".$lang['id']."&SnippetsSearch%5B"; ?>>
                 <?php echo $lang['name']; ?>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                </a>
             </div>
             <?php } ?>
         </div>

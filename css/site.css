@@ -126,3 +126,24 @@ a.desc:after {
 {
     display: block;
 }
+
+.snippets-view h1
+{
+    display: inline-block;
+}
+
+.snippets-view .user-snippet
+{
+    font-weight: bold;
+}
+
+.comment
+{
+    padding-top: 20px;
+    border-bottom: 1px solid #000;
+}
+
+#commentform
+{
+    padding-top: 20px;
+}
