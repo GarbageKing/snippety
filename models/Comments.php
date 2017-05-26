@@ -77,5 +77,18 @@ class Comments extends \yii\db\ActiveRecord
         return $this->hasOne(Snippets::className(), ['id' => 'id_snippet']);
     }
     
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert))
+        {
+            if($this->isNewRecord)
+            {
+                $this->c_text = str_replace(['<', '>'], ['&lt;', '&gt;'], $this->c_text);             
+            }          
+            
+            return parent::beforeSave($insert);            
+            
+        }
+    }    
     
 }

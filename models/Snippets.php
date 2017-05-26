@@ -108,6 +108,8 @@ class Snippets extends \yii\db\ActiveRecord
                 
                 if($this->is_public == '')
                     $this->is_public = 1;
+                
+                //$this->s_code = str_replace(['<', '>'], ['&lt;', '&gt;'], $this->s_code); 
             
             }     
            

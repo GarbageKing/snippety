@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div id="snip-content">
         <section><?php echo $model->s_description; ?></section>
-        <pre><code><?php echo $model->s_code; ?></code></pre>
+        <pre><code><?php echo str_replace(['<', '>'], ['&lt;', '&gt;'], $model->s_code); ?></code></pre>
         <time><?php echo $model->s_date; ?></time>
     </div>
     
@@ -37,10 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php foreach ($comments as $comment){ ?>
         <div class="comment">
             <p><span class="user-snippet"><?php echo $comment['username']; ?> says:</span></p>
-            <div><?php echo $comment['c_text']; ?>
+            <div><?php echo str_replace(['<', '>'], ['&lt;', '&gt;'], $comment['c_text']); ?>
             <p><?= Html::a('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>', ['commentlike', 'id' => $comment['id'], 'is_like' => 1], ['class' => 'btn btn-success btn-xs']) ?> 
                 [<?php echo  $comment['countlike'];?>] <?= Html::a('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>', ['commentlike', 'id' => $comment['id'], 'is_like' => 0], ['class' => 'btn btn-danger btn-xs']) ?> 
-                [<?php echo  $comment['countdislike'];?>]</p>
+                [<?php echo  $comment['countdislike'];?>] <?= $comment['id_user'] == Yii::$app->user->getId() ? 
+                        "<a href='index.php/?r=comments%2Fupdate&id=".$comment['id']."'>"
+                        . "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a> "
+                        . "<a href='index.php/?r=comments%2Fdelete&id=".$comment['id']."' data-method='post'>"
+                        . "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>" : '' ?></p>            
             </div>
         </div>
         <?php } ?>

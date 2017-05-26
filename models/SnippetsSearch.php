@@ -43,7 +43,8 @@ class SnippetsSearch extends Snippets
     {
         $query = Snippets::find();
         
-        $query->joinWith(['idLanguage'])->joinWith(['idUser']);
+        $query->joinWith(['idLanguage'])->joinWith(['idUser'])
+                ->where('snippets.is_public=1');
                 //->join('JOIN',
                 //'languages as l',
 		//'l.id = snippets.id_language');

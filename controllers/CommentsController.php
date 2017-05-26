@@ -29,32 +29,6 @@ class CommentsController extends Controller
         ];
     }
 
-    /**
-     * Lists all Comments models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new CommentsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Comments model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
 
     /**
      * Creates a new Comments model.
@@ -66,18 +40,13 @@ class CommentsController extends Controller
         $model = new Comments();
         if ($model->load(Yii::$app->request->post())){
             $model->id_user = Yii::$app->user->getId();
+            if($model->id_user == '')
+                return;
             $model->id_snippet = explode('id=', Yii::$app->request->referrer)[1];
-            //print_r($model);die;
+            
             $model->save();
             return $this->redirect(Yii::$app->request->referrer);
-        }
-        /*if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->request->referrer);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }*/
+        }        
     }
 
     /**
@@ -88,6 +57,10 @@ class CommentsController extends Controller
      */
     public function actionUpdate($id)
     {
+        $exists = Comments::find()->where( [ 'id' => $id, 'id_user' => Yii::$app->user->getId() ] )->exists();
+        if(!$exists)
+            return;
+        
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -107,6 +80,10 @@ class CommentsController extends Controller
      */
     public function actionDelete($id)
     {
+        $exists = Comments::find()->where( [ 'id' => $id, 'id_user' => Yii::$app->user->getId() ] )->exists();
+        if(!$exists)
+            return;
+        
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
