@@ -23,12 +23,16 @@ $this->params['breadcrumbs'][] = $this->title;
         <time><?php echo $model->s_date; ?></time>
     </div>
     
-    
-    <div id="likes">
+    <div id='likeshare'>
+        <div id="likes">
                 
-        <p>Like <?= Html::a('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 1], ['class' => 'btn btn-success']) ?> [<?php echo $snippetlikes; ?>] 
-           Dislike <?= Html::a('<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 0], ['class' => 'btn btn-danger']) ?> [<?php echo $snippetdislikes; ?>]</p>
+            <p>Like <?= Html::a('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 1], ['class' => 'btn btn-success']) ?> [<?php echo $snippetlikes; ?>] 
+             Dislike <?= Html::a('<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 0], ['class' => 'btn btn-danger']) ?> [<?php echo $snippetdislikes; ?>]</p>
 
+        </div>
+        <div id='sharing'>
+            <div class="addthis_inline_share_toolbox"></div>
+        </div>        
     </div>
     
     <div id="comments">

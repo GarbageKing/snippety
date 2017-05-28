@@ -4,15 +4,25 @@
 
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = 'My Snippets';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-about">
+<div class="my-snippets">
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        This is the About page. You may modify the following file to customize its content:
-    </p>
-
-    <code><?= __FILE__ ?></code>
+    
+    <?php foreach($snippets as $snippet) { ?>
+    
+        <div>
+            <h3><?php echo $snippet['s_title']; ?></h3>
+            <p><?php echo $snippet['s_description']; ?></p>
+            <time><?php echo $snippet['s_date']; ?></time>
+            <?php echo "<a href='index.php/?r=snippets%2Fupdate&id=".$snippet['id']."'>"
+                        . "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a> "
+                        . "<a href='index.php/?r=comments%2Fdelete&id=".$snippet['id']."' data-method='post'>"
+                        . "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+            ?>
+        </div>
+    
+    <?php } ?>    
+    
 </div>

@@ -37,7 +37,22 @@ $this->params['breadcrumbs'][] = $this->title;
                       'label' => 'User',
                       'attribute' => 'id_user',                        
                       'value' => 'idUser.username',                      
-            ],          
+            ],      
+//            [
+//                      'label' => 'Rating',
+//                      'attribute' => 'snippetlikes.rating',                        
+//                      'value' => 'snippetlikes.rating',                      
+//            ],  
+            [             
+             'label' => 'Comments',
+             'attribute'=>'commentsCount',
+             'value' => 'commentsCount',
+            ],            
+            [             
+             'label' => 'Rating',
+             'attribute'=>'snippetLikesCount',
+             'value' => 'snippetLikesCount',
+            ],
 
             ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
         ],

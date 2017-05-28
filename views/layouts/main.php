@@ -37,8 +37,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            Yii::$app->user->getId() ? ['label' => 'My Snippets', 'url' => ['/site/mysnippets']] : '',            
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -83,6 +82,7 @@ $(document).ready(function() {
   });
 });
 </script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-59295b40b71e9eab"></script> 
 </body>
 </html>
 <?php $this->endPage() ?>

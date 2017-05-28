@@ -12,6 +12,7 @@ use app\models\Snippets;
  */
 class SnippetsSearch extends Snippets
 {
+    public $commentsCount;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class SnippetsSearch extends Snippets
     {
         return [
             [['id', /*'id_language',*/ 'id_user', 'is_public'], 'integer'],
-            [['s_title', 's_description', 's_code', 's_date', 'id_language'], 'safe'],
+            [['s_title', 's_description', 's_code', 's_date', 'id_language', 'commentsCount'], 'safe'],
         ];
     }
 
@@ -41,20 +42,32 @@ class SnippetsSearch extends Snippets
      */
     public function search($params)
     {
-        $query = Snippets::find();
+        $query = Snippets::find()->where('snippets.is_public=1');  
+                
+        $subQuery = Comments::find()
+        ->select('id_snippet, COUNT(id_snippet) as ccount')
+        ->groupBy('id_snippet');
+        $query->leftJoin(['commentsCount' => $subQuery], 'commentsCount.id_snippet = id');
         
-        $query->joinWith(['idLanguage'])->joinWith(['idUser'])
-                ->where('snippets.is_public=1');
-                //->join('JOIN',
-                //'languages as l',
-		//'l.id = snippets.id_language');
-
-        // add conditions that should always apply here
-
+        $subQuery2 = Snippetlikes::find()
+        ->select('id_snippet,'
+                . ' (COUNT(case is_like when 1 then 1 else null end) - COUNT(case is_like when 0 then 1 else null end)) as lcount')
+        ->groupBy('id_snippet');
+        $query->leftJoin(['snippetLikesCount' => $subQuery2], 'snippetLikesCount.id_snippet = id');
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['commentsCount'] = [
+        'asc' => ['commentsCount.ccount' => SORT_ASC],
+        'desc' => ['commentsCount.ccount' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['snippetLikesCount'] = [
+        'asc' => ['snippetLikesCount.lcount' => SORT_ASC],
+        'desc' => ['snippetLikesCount.lcount' => SORT_DESC],
+        ];
+                
         $this->load($params);
 
         if (!$this->validate()) {
@@ -65,8 +78,7 @@ class SnippetsSearch extends Snippets
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            //'id_language' => $this->id_language,
+            'id' => $this->id,            
             'id_user' => $this->id_user,
             's_date' => $this->s_date,
             'is_public' => $this->is_public,
@@ -75,8 +87,8 @@ class SnippetsSearch extends Snippets
         $query->andFilterWhere(['like', 's_title', $this->s_title])
             ->andFilterWhere(['like', 's_description', $this->s_description])
             ->andFilterWhere(['like', 's_code', $this->s_code])
-            ->andFilterWhere(['like', /*'languages.name'*/'id_language', $this->id_language]);
-
+            ->andFilterWhere(['like', 'id_language', $this->id_language]);
+            
         return $dataProvider;
     }
 }

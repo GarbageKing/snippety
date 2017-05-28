@@ -11,13 +11,38 @@ $this->title = 'My Yii Application';
     <div class="body-content">
 
         <div class="row">
-            <?php foreach ($languages as $lang){?>
-            <div class="col-lg-4">
-                <a href=<?php echo "?r=snippets%2Findex&SnippetsSearch%5Bid_language%5D=&SnippetsSearch%5Bid_language%5D=".$lang['id']."&SnippetsSearch%5B"; ?>>
-                <?php echo $lang['name']; ?>
-                </a>
-            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="?r=snippets%2Findex">
+                        All
+                        </a>
+                    </div>            
+                    <?php foreach ($languages as $lang){?>
+                    <div class="col-md-4">
+                        <a href=<?php echo "?r=snippets%2Findex&SnippetsSearch%5Bid_language%5D=&SnippetsSearch%5Bid_language%5D=".$lang['id']."&SnippetsSearch%5B"; ?>>
+                        <?php echo $lang['name']; ?>
+                        </a>
+                    </div>
+                    <?php } ?>
+                </div>
+        </div>
+            
+        <div class="col-md-2">
+            <h3>Top Snippets</h3>
+            <ol class="rsnippet">
+            <?php foreach ($top_snippets as $snip){?>
+                        <li>
+                        <a href=<?php echo "?r=snippets%2Fview&id=".$snip['id']; ?>>
+                        <?php echo $snip['s_title']; ?>
+                        </a>
+                        <p>Rating: <?php echo $snip['countrating']; ?></p>
+                        <p>By: <?php echo $snip['username']; ?></p>
+                        </li>
             <?php } ?>
+            </ol>
+        </div>
+            
         </div>
 
     </div>

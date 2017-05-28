@@ -72,6 +72,11 @@ class Snippets extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Comments::className(), ['id_snippet' => 'id']);
     }
+    
+    public function getCommentsCount()
+    {
+        return $this->hasMany(Comments::className(), ['id_snippet' => 'id'])->count();
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -80,7 +85,13 @@ class Snippets extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Snippetlikes::className(), ['id_snippet' => 'id']);
     }
-
+    
+    public function getSnippetLikesCount()
+    {   
+        return $this->hasMany(Snippetlikes::className(), ['id_snippet' => 'id'])->where(['is_like'=>1])->count() - 
+                $this->hasMany(Snippetlikes::className(), ['id_snippet' => 'id'])->where(['is_like'=>0])->count();
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -109,8 +120,6 @@ class Snippets extends \yii\db\ActiveRecord
                 if($this->is_public == '')
                     $this->is_public = 1;
                 
-                //$this->s_code = str_replace(['<', '>'], ['&lt;', '&gt;'], $this->s_code); 
-            
             }     
            
             
