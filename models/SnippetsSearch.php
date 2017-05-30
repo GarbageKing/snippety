@@ -51,7 +51,7 @@ class SnippetsSearch extends Snippets
         
         $subQuery2 = Snippetlikes::find()
         ->select('id_snippet,'
-                . ' (COUNT(case is_like when 1 then 1 else null end) - COUNT(case is_like when 0 then 1 else null end)) as lcount')
+                . '( COUNT(case is_like when 1 then 1 else null end) - COUNT(case is_like when 0 then 1 else null end) ) as lcount')                
         ->groupBy('id_snippet');
         $query->leftJoin(['snippetLikesCount' => $subQuery2], 'snippetLikesCount.id_snippet = id');
         
@@ -64,8 +64,8 @@ class SnippetsSearch extends Snippets
         'desc' => ['commentsCount.ccount' => SORT_DESC],
         ];
         $dataProvider->sort->attributes['snippetLikesCount'] = [
-        'asc' => ['snippetLikesCount.lcount' => SORT_ASC],
-        'desc' => ['snippetLikesCount.lcount' => SORT_DESC],
+        'asc' => ['COALESCE(snippetLikesCount.lcount, 0)' => SORT_ASC],
+        'desc' => ['COALESCE(snippetLikesCount.lcount, 0)' => SORT_DESC],
         ];
                 
         $this->load($params);

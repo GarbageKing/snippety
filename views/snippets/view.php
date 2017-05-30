@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [<?php echo  $comment['countdislike'];?>] <?= $comment['id_user'] == Yii::$app->user->getId() ? 
                         "<a href='index.php/?r=comments%2Fupdate&id=".$comment['id']."'>"
                         . "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a> "
-                        . "<a href='index.php/?r=comments%2Fdelete&id=".$comment['id']."' data-method='post'>"
+                        . "<a href='index.php/?r=comments%2Fdelete&id=".$comment['id']."' data-method='post' data-confirm = 'Are you sure you want to delete this item?'>"
                         . "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>" : '' ?></p>            
             </div>
         </div>

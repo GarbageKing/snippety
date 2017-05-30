@@ -62,7 +62,7 @@ class SnippetsController extends Controller
         $exists2 = Snippets::find()->where( [ 'id' => $id, 'id_user' => Yii::$app->user->getId() ] )->exists();
         
         if(!$exists && !$exists2)
-            return;
+            throw new NotFoundHttpException('The requested page does not exist.');
         
         $model2 = new Comments();
         
@@ -121,7 +121,7 @@ class SnippetsController extends Controller
     public function actionCreate()
     {
         if(!Yii::$app->user->getId())
-            return;
+            return $this->redirect('?r=site/login');
         
         $model = new Snippets();        
 
@@ -146,7 +146,7 @@ class SnippetsController extends Controller
     {      
         $exists = Snippets::find()->where( [ 'id' => $id, 'id_user' => Yii::$app->user->getId() ] )->exists();
         if(!$exists)
-            return;
+            throw new NotFoundHttpException('The requested page does not exist.');
         
         $model = $this->findModel($id);
 
@@ -171,8 +171,19 @@ class SnippetsController extends Controller
         
         $exists = Snippets::find()->where( [ 'id' => $id, 'id_user' => Yii::$app->user->getId() ] )->exists();
         if(!$exists)
-            return;
+            throw new NotFoundHttpException('The requested page does not exist.');
         
+        $Comments = Comments::find()->where(['id_snippet' => $id])->all();
+        
+        foreach ($Comments as $comment)
+        {
+            Yii::$app->db->createCommand()->delete('commentlikes', ['id_comment' => $comment['id']])->execute();       
+            
+            Yii::$app->db->createCommand()->delete('comments', ['id' => $comment['id']])->execute();
+        }
+        
+        Yii::$app->db->createCommand()->delete('snippetlikes', ['id_snippet' => $id])->execute();        
+                 
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -182,7 +193,7 @@ class SnippetsController extends Controller
     public function actionLike($id, $is_like)
     {
         if(!Yii::$app->user->getId())
-            return;
+            return $this->redirect('?r=site/login');
         
         $exists = Snippetlikes::find()->where(['id_snippet' => $id, 'id_user' => Yii::$app->user->getId()])->all();
         
@@ -205,7 +216,7 @@ class SnippetsController extends Controller
     public function actionCommentlike($id, $is_like)
     {
         if(!Yii::$app->user->getId())
-            return;
+            return $this->redirect('?r=site/login');
         
         $exists = Commentlikes::find()->where(['id_comment' => $id, 'id_user' => Yii::$app->user->getId()])->all();
         

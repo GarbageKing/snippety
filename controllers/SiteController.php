@@ -121,7 +121,7 @@ class SiteController extends Controller
     public function actionMysnippets()
     {
         if(!Yii::$app->user->getId())
-            return;
+            return $this->redirect('?r=site/login');
         
         $query = (new \yii\db\Query())
        ->select('*')

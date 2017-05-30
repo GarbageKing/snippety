@@ -41,7 +41,8 @@ class CommentsController extends Controller
         if ($model->load(Yii::$app->request->post())){
             $model->id_user = Yii::$app->user->getId();
             if($model->id_user == '')
-                return;
+                return $this->redirect('?r=site/login');
+            
             $model->id_snippet = explode('id=', Yii::$app->request->referrer)[1];
             
             $model->save();
@@ -59,7 +60,7 @@ class CommentsController extends Controller
     {
         $exists = Comments::find()->where( [ 'id' => $id, 'id_user' => Yii::$app->user->getId() ] )->exists();
         if(!$exists)
-            return;
+            throw new NotFoundHttpException('The requested page does not exist.');
         
         $model = $this->findModel($id);
 
@@ -82,7 +83,9 @@ class CommentsController extends Controller
     {
         $exists = Comments::find()->where( [ 'id' => $id, 'id_user' => Yii::$app->user->getId() ] )->exists();
         if(!$exists)
-            return;
+        throw new NotFoundHttpException('The requested page does not exist.');
+        
+        Yii::$app->db->createCommand()->delete('commentlikes', ['id_comment' => $id])->execute();
         
         $this->findModel($id)->delete();
 
