@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    background-color: #B3C6C8;
 }
 
 .wrap {
@@ -16,8 +17,7 @@ body {
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
+    background-color: #8ca6a9;    
     padding-top: 20px;
 }
 
@@ -146,4 +146,20 @@ a.desc:after {
 #commentform
 {
     padding-top: 20px;
+}
+
+nav
+{
+    background-color: #8ca6a9 !important;
+    border: none !important;    
+}
+
+nav a, nav button, footer
+{
+    color: #dde58d !important;    
+}
+
+nav ul li.active a
+{
+    background-color: #638285 !important;
 }

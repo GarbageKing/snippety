@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\Languages;
 use app\models\Snippetlikes;
 use app\models\Users;
+use app\models\SnippetsSearch;
 
 class SiteController extends Controller
 {
@@ -123,13 +124,19 @@ class SiteController extends Controller
         if(!Yii::$app->user->getId())
             return $this->redirect('?r=site/login');
         
-        $query = (new \yii\db\Query())
+       /* $query = (new \yii\db\Query())
        ->select('*')
        ->from('snippets')
        ->where('id_user='.Yii::$app->user->getId());         
-        $snippets = $query->all();
+        $snippets = $query->all();*/
+        
+        $searchModel = new SnippetsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, true);
         
         return $this->render('mysnippets', 
-        ['snippets' => $snippets]);
+        [/*'snippets' => $snippets*/
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

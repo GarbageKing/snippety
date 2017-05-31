@@ -37,7 +37,12 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            Yii::$app->user->getId() ? ['label' => 'My Snippets', 'url' => ['/site/mysnippets']] : '',            
+            Yii::$app->user->getId() ? ['label' => 'My Snippets', 'url' => ['/site/mysnippets']] : '',       
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Register', 'url' => ['/users/create']]
+            ) : (                
+                '<li><a href="?r=users/update&id='.Yii::$app->user->getId().'">Update Info</a><li>'
+            ),
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -49,7 +54,7 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
         ],
     ]);
     NavBar::end();

@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true])->label('Username') ?>
 
-    <?= $form->field($model, 'upassword')->textInput(['maxlength' => true])->label('Password') ?>
+    <?= $form->field($model, 'upassword')->passwordInput(['maxlength' => true])->label('Password') ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true])->label('Email') ?>
 

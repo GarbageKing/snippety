@@ -12,10 +12,10 @@ use app\models\Languages;
 $this->title = 'Snippets';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="snippets-index">
+<div class="row snippets-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    
+  
     <div class="col-md-10">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -40,9 +40,13 @@ class SnippetsSearch extends Snippets
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $is_private=false)
     {
-        $query = Snippets::find()->where('snippets.is_public=1');  
+        if(!$is_private){
+            $query = Snippets::find()->where('snippets.is_public=1');  
+        }else{
+            $query = Snippets::find()->where('snippets.is_public=0 and snippets.id_user='.Yii::$app->user->getId());
+        }
                 
         $subQuery = Comments::find()
         ->select('id_snippet, COUNT(id_snippet) as ccount')
