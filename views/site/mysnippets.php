@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
         <div class="col-md-2" style="margin-top:50px;">   
-            <?= Html::a('Create Snippets', ['create'], ['class' => 'btn btn-success']) ?>       
+            <?= Html::a('Create Snippets', ['create'], ['class' => 'btn btn-default']) ?>       
         </div>
     </div>
     

@@ -2,24 +2,24 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Snippety[ ]';
 ?>
-<div class="site-index">
+<div class="site-index row">
+    <div class="col-xs-12">
 
         <h2>Go to the Snippets by clicking one of the tabs below!</h2>
 
-    <div class="body-content">
-
-        <div class="row">
+    <div class="body-content row">
+        
             <div class="col-md-10">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row langrid">
+                    <div class="col-xs-4">
                         <a href="?r=snippets%2Findex">
                         All
                         </a>
                     </div>            
                     <?php foreach ($languages as $lang){?>
-                    <div class="col-md-4">
+                    <div class="col-xs-4">
                         <a href=<?php echo "?r=snippets%2Findex&SnippetsSearch%5Bid_language%5D=&SnippetsSearch%5Bid_language%5D=".$lang['id']."&SnippetsSearch%5B"; ?>>
                         <?php echo $lang['name']; ?>
                         </a>
@@ -37,13 +37,13 @@ $this->title = 'My Yii Application';
                         <?php echo $snip['s_title']; ?>
                         </a>
                         <p>Rating: <?php echo $snip['countrating']; ?></p>
-                        <p>By: <?php echo $snip['username']; ?></p>
+                        <p>By: <strong><?php echo $snip['username']; ?></strong></p>
                         </li>
             <?php } ?>
             </ol>
         </div>
-            
-        </div>
-
+        
     </div>
+        
+  </div>
 </div>

@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row snippets-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="col-xs-12"><h1><?= Html::encode($this->title) ?></h1></div>
   
     <div class="col-md-10">
     <?= GridView::widget([
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-2 ">
     <?= $this->render('_search', ['model' => $searchModel]) ?>
     <p style="margin-top:50px;">
-        <?= Html::a('Create Snippets', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Snippets', ['create'], ['class' => 'btn btn-default']) ?>
     </p>
     </div>
 </div>

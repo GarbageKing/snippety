@@ -17,22 +17,16 @@ use app\models\Languages;
         'method' => 'get',
     ]); ?>
 
-    <h3>Languages</h3>
-    <label><input type="radio" name="SnippetsSearch[id_language]" value="" checked="checked">All</label>
-    <?= $form->field($model, 'id_language')->radioList(ArrayHelper::map(Languages::find()->asArray()->all(), 'id', 'name') )->label(false) ?>
-
-    <h3>Title</h3>
-    <?= $form->field($model, 's_title')->label(false) ?>    
-
-    <?php // echo $form->field($model, 's_code') ?>
-
-    <?php // echo $form->field($model, 's_date') ?>
-
-    <?php // echo $form->field($model, 'is_public') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', ['class' => 'btn btn-default btn-block']) ?>       
+    <div class="form-group row">
+        <div class="col-xs-12"><h3>Title</h3></div>
+        <div class="col-xs-9"><?= $form->field($model, 's_title')->label(false) ?></div>  
+        <div class="col-xs-3"><?= Html::submitButton('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', ['class' => 'btn btn-default btn-block langsearch']) ?></div>       
     </div>
+    <div class="form-group">
+        <h3>Languages</h3> 
+        <label><input type="radio" name="SnippetsSearch[id_language]" value="" checked="checked">All</label>
+        <?= $form->field($model, 'id_language')->radioList(ArrayHelper::map(Languages::find()->asArray()->all(), 'id', 'name') )->label(false) ?>
+    </div>    
 
     <?php ActiveForm::end(); ?>
 

@@ -70,9 +70,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="text-center">&copy; Garbage_kinG <?= date('Y') ?></p>
     </div>
 </footer>
 
@@ -85,7 +83,11 @@ $(document).ready(function() {
   $('code, .codearea').each(function(i, block) {
     hljs.highlightBlock(block);
   });
+  $('.snippets-search label').click(function(){
+        $('.langsearch').click();
+    });
 });
+
 </script>
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-59295b40b71e9eab"></script> 
 </body>
