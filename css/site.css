@@ -232,7 +232,31 @@ pre
     border: none;
 }
 
-#likes, #sharing
+
+.snippets-search label
 {
-    display: inline-block;
+    background-color: #877084;
+    width: 100%;
+    height: 25px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.snippets-search label>input
+{
+    display:none;
+}
+
+.snippets-search label.active
+{
+    background-color: #654861;    
+    
+}
+
+.snippets-create h1,
+.snippets-update h1,
+.users-create h1,
+.users-update h1
+{
+    text-align: center;
 }

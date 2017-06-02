@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <h1><?= Html::encode($this->title) ?></h1>
         </div>
         <div class="col-md-2" style="margin-top:50px;">   
-            <?= Html::a('Create Snippets', ['create'], ['class' => 'btn btn-default']) ?>       
+            <?= Html::a('Create Snippets', ['snippets/create'], ['class' => 'btn btn-default']) ?>       
         </div>
     </div>
     
@@ -46,6 +46,18 @@ $this->params['breadcrumbs'][] = $this->title;
              'label' => 'Rating',
              'attribute'=>'snippetLikesCount',
              'value' => 'snippetLikesCount',
+            ],            
+            'is_public' =>[
+                'label' => 'Is public',
+               'value' => function($model) {
+                 if($model->is_public == 0)
+                    $is_public = 'No';
+                 if($model->is_public == 1)
+                    $is_public = 'Yes';                 
+                 return $is_public;
+            },
+            'attribute' => 'is_public',
+            'filter'=>false,
             ],
 
             ['class' => 'yii\grid\ActionColumn',

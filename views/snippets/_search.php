@@ -24,7 +24,7 @@ use app\models\Languages;
     </div>
     <div class="form-group">
         <h3>Languages</h3> 
-        <label><input type="radio" name="SnippetsSearch[id_language]" value="" checked="checked">All</label>
+        <label><input id="allinp" type="radio" name="SnippetsSearch[id_language]" value="">All</label>
         <?= $form->field($model, 'id_language')->radioList(ArrayHelper::map(Languages::find()->asArray()->all(), 'id', 'name') )->label(false) ?>
     </div>    
 

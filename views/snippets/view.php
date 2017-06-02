@@ -23,21 +23,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <time><?php echo $model->s_date; ?></time>
     </div>
     
-    <div id='likeshare'>
-        <div id="likes">
+    <div id='likeshare' class="row">
+        <div id="likes" class="col-md-6">
                 
             <p>Like <?= Html::a('<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 1], ['class' => 'btn btn-success']) ?> [<?php echo $snippetlikes; ?>] 
              Dislike <?= Html::a('<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>', ['like', 'id' => $model->id, 'is_like' => 0], ['class' => 'btn btn-danger']) ?> [<?php echo $snippetdislikes; ?>]</p>
 
         </div>
-        <div id='sharing'>
+        
+        <div id='sharing' class="col-md-6 text-right">
             <div class="addthis_inline_share_toolbox"></div>
         </div>        
     </div>
     
     <div id="comments">
         <h3>Comments</h3>
-        
+        <?php if($comments == []) echo 'None yet'; ?>
         <?php foreach ($comments as $comment){ ?>
         <div class="comment">
             <p><span class="user-snippet"><?php echo $comment['username']; ?> says:</span></p>

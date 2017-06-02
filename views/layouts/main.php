@@ -85,7 +85,12 @@ $(document).ready(function() {
   });
   $('.snippets-search label').click(function(){
         $('.langsearch').click();
-    });
+    });   
+    
+  $('.snippets-search label').removeClass('active');
+   
+  $('.snippets-search input[checked]').parent().addClass('active');  
+  
 });
 
 </script>

@@ -45,7 +45,7 @@ class SnippetsSearch extends Snippets
         if(!$is_private){
             $query = Snippets::find()->where('snippets.is_public=1');  
         }else{
-            $query = Snippets::find()->where('snippets.is_public=0 and snippets.id_user='.Yii::$app->user->getId());
+            $query = Snippets::find()->where('snippets.id_user='.Yii::$app->user->getId()); //snippets.is_public=0 and 
         }
                 
         $subQuery = Comments::find()
