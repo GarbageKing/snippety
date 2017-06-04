@@ -18,31 +18,32 @@ $this->params['breadcrumbs'][] = $this->title;
   
     <div class="col-md-10">
     <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'dataProvider' => $dataProvider,  
+        'layout' => "{summary}\n{items}\n<div align='center'>{pager}</div>",
         'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
-                             
+                   
             [
                       'label' => 'Language',
                       'attribute' => 'id_language',                        
-                      'value' => 'idLanguage.name',
-                      //'filter'=>ArrayHelper::map(Languages::find()->asArray()->all(), 'id', 'name'),
+                      'value' => 'idLanguage.name',                      
             ],
             
-            's_title',
-            's_description',            
+            's_title',               
+            [
+                'attribute' => 's_description',
+                'value'     => function ($model) {
+                if(mb_strlen($model->s_description)>50)
+                return mb_substr($model->s_description, 0, 50).'...';
+                return $model->s_description;
+                }
+            ],
             's_date',
             [
                       'label' => 'User',
                       'attribute' => 'id_user',                        
                       'value' => 'idUser.username',                      
-            ],      
-//            [
-//                      'label' => 'Rating',
-//                      'attribute' => 'snippetlikes.rating',                        
-//                      'value' => 'snippetlikes.rating',                      
-//            ],  
+            ],     
+          
             [             
              'label' => 'Comments',
              'attribute'=>'commentsCount',

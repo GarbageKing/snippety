@@ -66,21 +66,6 @@ class SnippetsController extends Controller
         
         $model2 = new Comments();
         
-        //$comments = Comments::find()->leftJoin('commentlikes', 'commentlikes.id_comment = comments.id')->where(['id_snippet' => $id])->all(); 
-        //$comments = Comments::find()->where(['id_snippet' => $id])->all();
-                
-        /*$likedislike = [];
-        foreach($comments as $comment)
-        {
-            $commentlikes = Commentlikes::find()->where(['id_comment' => $comment['id'], 'is_like' => 1])->all();
-            $countlikes = count($commentlikes);
-            $likedislike['likes'][] = $countlikes;
-            
-            $commentdislikes = Commentlikes::find()->where(['id_comment' => $comment['id'], 'is_like' => 0])->all();
-            $countdislikes = count($commentdislikes);
-            $likedislike['dislikes'][] = $countdislikes;
-        }*/
-        
         $query = (new \yii\db\Query())
        ->select(['comments.*', 'COUNT(case is_like when 1 then 1 else null end) AS countlike, '
            . 'COUNT(case is_like when 0 then 1 else null end) AS countdislike, users.username from comments'])
@@ -90,8 +75,6 @@ class SnippetsController extends Controller
        ->groupBy('comments.id');       
         $comments = $query->all();
         
-        //print_r($comments);die;        
-                
         $model3 = new Snippetlikes();
         
         $snippetlikes = Snippetlikes::find()->where(['id_snippet' => $id, 'is_like' => 1])->all();

@@ -49,7 +49,7 @@ class Comments extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_user' => 'Id User',
             'id_snippet' => 'Id Snippet',
-            'c_text' => 'C Text',
+            'c_text' => 'Text',
         ];
     }
 

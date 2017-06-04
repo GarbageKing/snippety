@@ -19,7 +19,7 @@ class SnippetsSearch extends Snippets
     public function rules()
     {
         return [
-            [['id', /*'id_language',*/ 'id_user', 'is_public'], 'integer'],
+            [['id', 'id_user', 'is_public'], 'integer'],
             [['s_title', 's_description', 's_code', 's_date', 'id_language', 'commentsCount'], 'safe'],
         ];
     }

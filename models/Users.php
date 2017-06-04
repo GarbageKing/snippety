@@ -36,9 +36,9 @@ class Users extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'upassword', 'email'/*, 'auth_key'*/], 'required'],
+            [['username', 'upassword', 'email'], 'required'],
             [['username', 'email'], 'string', 'max' => 100],
-            [['upassword'/*, 'auth_key'*/], 'string', 'max' => 64],
+            [['upassword'], 'string', 'max' => 64],
         ];
     }
 
@@ -50,7 +50,7 @@ class Users extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'username' => 'Username',
-            'upassword' => 'Upassword',
+            'upassword' => 'Password',
             'email' => 'Email',
             'auth_key' => 'Auth Key',
         ];

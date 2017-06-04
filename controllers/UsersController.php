@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Users;
-use app\models\UsersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -39,7 +38,7 @@ class UsersController extends Controller
         $model = new Users();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->id]);
+            
             return '<script>alert("Congrats! You can LogIn now!"); window.location.href="\index.php";</script>';
         } else {
             

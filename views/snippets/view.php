@@ -4,8 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 
-//use app\models\Users;
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Snippets */
 

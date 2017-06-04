@@ -123,18 +123,12 @@ class SiteController extends Controller
     {
         if(!Yii::$app->user->getId())
             return $this->redirect('?r=site/login');
-        
-       /* $query = (new \yii\db\Query())
-       ->select('*')
-       ->from('snippets')
-       ->where('id_user='.Yii::$app->user->getId());         
-        $snippets = $query->all();*/
-        
+                
         $searchModel = new SnippetsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, true);
         
         return $this->render('mysnippets', 
-        [/*'snippets' => $snippets*/
+        [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
